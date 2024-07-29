@@ -19,11 +19,19 @@ const App = () => {
   };
 
   useEffect(() => {
+    const localAuth = localStorage?.getItem("tasksBaseAuth");
+    if (localAuth) {
+      const authData = JSON.parse(localAuth);
+      const userData = extractUserData(authData);
+      dispatch(saveAuthData(userData));
+    }
+;
+  }, []);
+
+
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        const userData = extractUserData(currentUser);
-        dispatch(saveAuthData(userData));
-      } else {
+      if (!currentUser) {
         dispatch(logOutUser());
       }
     });

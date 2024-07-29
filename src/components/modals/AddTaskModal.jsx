@@ -35,9 +35,6 @@ const AddTaskModal = ({ user }) => {
       const res = await addTask(data);
       setLoading(false);
       form.reset();
-      window.bootstrap.Modal.getInstance(
-        document.getElementById("staticBackdrop")
-      ).hide();
     } catch (error) {
       ErrorNotify(error.message);
       setLoading(false);
@@ -121,6 +118,7 @@ const AddTaskModal = ({ user }) => {
                   disabled={loading}
                   type="submit"
                   className="btn btn-primary"
+                  data-bs-dismiss="modal"
                 >
                   {loading ? "Loading..." : "Save"}
                 </button>

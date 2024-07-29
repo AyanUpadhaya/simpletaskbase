@@ -20,7 +20,7 @@ const PrivateRouter = ({ children }) => {
     if (localAuth) {
       const authData = JSON.parse(localAuth);
       const userData = extractUserData(authData);
-      dispatch(saveAuthData(userData));
+      // dispatch(saveAuthData(userData));
       dispatch(saveUserData(userData));
       setLoading(false);
     }

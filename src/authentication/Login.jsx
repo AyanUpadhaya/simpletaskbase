@@ -2,20 +2,28 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { loginUser } from "../firebase/functions/functions.firebase";
 import { ErrorNotify, InfoNotify } from "../utils/getNotify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { saveAuthData } from "../features/authSlice/authSlice";
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const [showPassword, setShwoPassword] = useState(false);
   let from = location.state?.from?.pathname || "/";
   const { auth: stateAuth } = useSelector((state) => state.auth);
 
-   useEffect(() => {
-     if (stateAuth?.email) {
-       navigate("/");
-     }
-   }, [stateAuth]);
+  useEffect(() => {
+    if (stateAuth?.email) {
+      navigate("/");
+    }
+  }, [stateAuth]);
+
+  const extractUserData = (user) => {
+    if (!user) return null;
+    const { uid, email, displayName, photoURL } = user;
+    return { uid, email, displayName, photoURL };
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +34,10 @@ const Login = () => {
       setLoading(true);
       const result = await loginUser(email, password);
       const loggedUser = result.user;
+
       if (loggedUser) {
+        const userData = extractUserData(loggedUser);
+        dispatch(saveAuthData(userData));
         setLoading(false);
         navigate(from, { replace: true });
       }
@@ -40,7 +51,7 @@ const Login = () => {
       setLoading(false);
     }
   };
-  
+
   return (
     <div
       className="container py-4"
