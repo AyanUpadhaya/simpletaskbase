@@ -6,7 +6,6 @@ import { saveAuthData } from "../features/authSlice/authSlice";
 
 const PrivateRouter = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  // const { user } = useSelector((state) => state.user);
   const { auth } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -18,8 +17,6 @@ const PrivateRouter = ({ children }) => {
 
   useEffect(() => {
     const localAuth = localStorage?.getItem("koursely-auth");
-
-
     if (localAuth) {
       const authData = JSON.parse(localAuth);
       const userData = extractUserData(authData);

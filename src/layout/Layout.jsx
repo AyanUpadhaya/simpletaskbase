@@ -4,10 +4,10 @@ import { logOut } from "../firebase/functions/functions.firebase";
 import Navbar from "../components/shared/Navbar/Navbar";
 
 const Layout = () => {
-  const { user } = useSelector((state) => state.user);
+  const { auth } = useSelector((state) => state.auth);
   return (
     <div className="container">
-      <Navbar user={user} logOut={logOut}></Navbar>
+      <Navbar user={auth} logOut={logOut}></Navbar>
       <Outlet></Outlet>
     </div>
   );

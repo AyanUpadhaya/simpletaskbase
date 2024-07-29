@@ -1,6 +1,5 @@
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/routes";
-import useAuthCheck from "./hooks/useAuthCheck";
 import { NotifyContainer } from "./utils/getNotify";
 import app from "./firebase/firebase.config";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -10,10 +9,8 @@ import { logOutUser, saveAuthData } from "./features/authSlice/authSlice";
 
 const App = () => {
   const Router = router;
-  // const authChecked = useAuthCheck();
   const dispatch = useDispatch();
-
-  let auth = getAuth(app);
+  const auth = getAuth(app);
 
   const extractUserData = (user) => {
     if (!user) return null;
@@ -31,7 +28,7 @@ const App = () => {
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [auth, dispatch]);
 
   return (
     <div>

@@ -9,13 +9,13 @@ const Login = () => {
   const location = useLocation();
   const [showPassword, setShwoPassword] = useState(false);
   let from = location.state?.from?.pathname || "/";
-  const { auth } = useSelector((state) => state.auth);
+  const { auth: stateAuth } = useSelector((state) => state.auth);
 
    useEffect(() => {
-     if (auth?.email) {
+     if (stateAuth?.email) {
        navigate("/");
      }
-   }, [auth]);
+   }, [stateAuth]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

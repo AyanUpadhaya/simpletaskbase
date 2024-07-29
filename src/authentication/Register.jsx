@@ -12,35 +12,36 @@ const Register = () => {
   const [user, setUser] = useState(null);
   const [fullName, setFullName] = useState("");
   const [showPassword, setShwoPassword] = useState(false);
-  const { auth } = useSelector((state) => state.auth);
+  const { auth:stateAuth } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (auth?.email) {
+    if (stateAuth?.email) {
       navigate("/");
     }
-  }, [auth]);
-  
+  }, [stateAuth]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    
+
     try {
       setLoading(true);
       const result = await createUser(email, password);
       await addUser(fullName, email);
       const loggedUser = result.user;
-      setUser(loggedUser);
+      await updateProfile(auth.currentUser, {
+        displayName: fullName,
+      });
       InfoNotify("Account Created");
       setLoading(false);
 
       navigate("/login");
     } catch (error) {
-      if (error.code == "auth/email-already-in-use"){
+      if (error.code == "auth/email-already-in-use") {
         ErrorNotify("Email already exists");
-      }else{
+      } else {
         ErrorNotify(error.code);
       }
 
@@ -48,17 +49,6 @@ const Register = () => {
       setUser(null);
     }
   };
-
-  useEffect(() => {
-    async function updateCurrentUserName() {
-      await updateProfile(auth.currentUser, {
-        displayName: fullName,
-      });
-    }
-    if (user) {
-      updateCurrentUserName();
-    }
-  }, [user]);
 
   return (
     <div
