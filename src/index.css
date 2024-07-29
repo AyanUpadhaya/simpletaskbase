@@ -1,26 +1,42 @@
-body{
-    margin:0;
-    padding:0;
-    box-sizing: border-box;
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.cursor-pointer{
-    cursor: pointer;
+.cursor-pointer {
+  cursor: pointer;
 }
 
-
-.password-box{
-    position: relative;
+.password-box {
+  position: relative;
 }
-.password-box input{
-    padding-right: 60px;
+.password-box input {
+  padding-right: 60px;
 }
 
-.show-btn{
-    position: absolute;
-    right: 10px;
-    top: 5px;
-    background-color: transparent;
-    outline: 0;
-    border: 0;
+.show-btn {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  background-color: transparent;
+  outline: 0;
+  border: 0;
+}
+
+.edit-form {
+  width: 75%;
+}
+
+@media screen and (max-width: 992px) {
+  .edit-form {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  th,
+  td {
+    font-size: 0.9rem;
+  }
 }

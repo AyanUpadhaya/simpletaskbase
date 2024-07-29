@@ -14,8 +14,8 @@ const TaskDetail = () => {
       <div className="mb-3">
         <BackButton route={"/"}></BackButton>
       </div>
-      <div className="d-flex justify-content-between">
-        <div className="w-50">
+      <div className="d-md-flex justify-content-between flex-wrap ">
+        <div className="edit-form mb-3">
           {!isEditing ? (
             <div>
               <h6>{payload?.title}</h6>

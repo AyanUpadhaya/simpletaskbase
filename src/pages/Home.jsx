@@ -131,8 +131,8 @@ const Home = () => {
     <div className="py-2">
       <div className="mt-4">
         {(allTasks || newData) && (
-          <div className="d-flex justify-content-between">
-            <div className="d-flex gap-2 mb-3 align-items-center">
+          <div className="d-flex justify-content-between flex-wrap">
+            <div className="d-flex gap-2 mb-3 align-items-center flex-wrap">
               <div className="dropdown z-3">
                 <button
                   className="btn btn-secondary dropdown-toggle"
