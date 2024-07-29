@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ErrorNotify, InfoNotify } from "../../utils/getNotify";
 import { addTask } from "../../firebase/functions/firebasedb.functions";
 import getCurrentUnixTimestamp from "../../utils/getCurrentUnixTimestamp";
 
 const AddTaskModal = ({ user }) => {
   const [loading, setLoading] = useState(false);
+  const modalRef = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,11 +35,9 @@ const AddTaskModal = ({ user }) => {
       const res = await addTask(data);
       setLoading(false);
       form.reset();
-      // Manually close the modal after successful submission
-      const modal = window.bootstrap.Modal.getInstance(
+      window.bootstrap.Modal.getInstance(
         document.getElementById("staticBackdrop")
-      );
-      modal.hide();
+      ).hide();
     } catch (error) {
       ErrorNotify(error.message);
       setLoading(false);
@@ -47,6 +46,7 @@ const AddTaskModal = ({ user }) => {
 
   return (
     <div
+      ref={modalRef}
       className="modal fade"
       id="staticBackdrop"
       data-bs-backdrop="static"
