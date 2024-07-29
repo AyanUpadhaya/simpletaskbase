@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { loginUser } from "../firebase/functions/functions.firebase";
 import { ErrorNotify, InfoNotify } from "../utils/getNotify";
+import { useSelector } from "react-redux";
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const [showPassword, setShwoPassword] = useState(false);
   let from = location.state?.from?.pathname || "/";
+  const { auth } = useSelector((state) => state.auth);
+
+   useEffect(() => {
+     if (auth?.email) {
+       navigate("/");
+     }
+   }, [auth]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,6 +40,7 @@ const Login = () => {
       setLoading(false);
     }
   };
+  
   return (
     <div
       className="container py-4"

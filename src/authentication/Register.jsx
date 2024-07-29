@@ -4,6 +4,7 @@ import { createUser, auth } from "../firebase/functions/functions.firebase";
 import { updateProfile } from "firebase/auth";
 import { ErrorNotify, InfoNotify } from "../utils/getNotify";
 import { addUser } from "../firebase/functions/firebasedb.functions";
+import { useSelector } from "react-redux";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -11,6 +12,13 @@ const Register = () => {
   const [user, setUser] = useState(null);
   const [fullName, setFullName] = useState("");
   const [showPassword, setShwoPassword] = useState(false);
+  const { auth } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (auth?.email) {
+      navigate("/");
+    }
+  }, [auth]);
   
 
   const handleSubmit = async (e) => {
