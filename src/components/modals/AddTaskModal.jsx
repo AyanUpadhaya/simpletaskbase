@@ -5,6 +5,7 @@ import getCurrentUnixTimestamp from "../../utils/getCurrentUnixTimestamp";
 
 const AddTaskModal = ({ user }) => {
   const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -13,6 +14,12 @@ const AddTaskModal = ({ user }) => {
     const description = form.taskDescription.value;
     const priority = form.priority.value;
     const currentTimeStamp = getCurrentUnixTimestamp();
+
+    if (!title || !description || !priority) {
+      ErrorNotify("Enter required fields");
+      setLoading(false);
+      return;
+    }
 
     const data = {
       title,
@@ -27,11 +34,17 @@ const AddTaskModal = ({ user }) => {
       const res = await addTask(data);
       setLoading(false);
       form.reset();
+      // Manually close the modal after successful submission
+      const modal = window.bootstrap.Modal.getInstance(
+        document.getElementById("staticBackdrop")
+      );
+      modal.hide();
     } catch (error) {
       ErrorNotify(error.message);
       setLoading(false);
     }
   };
+
   return (
     <div
       className="modal fade"
@@ -108,9 +121,8 @@ const AddTaskModal = ({ user }) => {
                   disabled={loading}
                   type="submit"
                   className="btn btn-primary"
-                  data-bs-dismiss="modal"
                 >
-                  {loading ? "Loading..." : " Save"}
+                  {loading ? "Loading..." : "Save"}
                 </button>
               </div>
             </form>
