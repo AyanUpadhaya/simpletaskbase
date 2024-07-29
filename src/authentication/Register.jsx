@@ -10,6 +10,7 @@ const Register = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [fullName, setFullName] = useState("");
+  const [showPassword, setShwoPassword] = useState(false);
   
 
   const handleSubmit = async (e) => {
@@ -92,13 +93,27 @@ const Register = () => {
         <div>
           <label htmlFor="">Password</label>
           <br />
-          <input
-            className="form-control"
-            type="password"
-            name="password"
-            placeholder="password"
-            required
-          />
+          <div className="password-box">
+            <input
+              required
+              className="form-control"
+              type={!showPassword ? "password" : "text"}
+              name="password"
+              placeholder="password"
+            />
+
+            <button
+              className="show-btn"
+              type="button"
+              onClick={() => setShwoPassword((prev) => !prev)}
+            >
+              {!showPassword ? (
+                <i className="fa-solid fa-eye"></i>
+              ) : (
+                <i class="fa-solid fa-eye-slash"></i>
+              )}
+            </button>
+          </div>
         </div>
         <br />
         <div>

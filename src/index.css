@@ -7,3 +7,20 @@ body{
 .cursor-pointer{
     cursor: pointer;
 }
+
+
+.password-box{
+    position: relative;
+}
+.password-box input{
+    padding-right: 60px;
+}
+
+.show-btn{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    background-color: transparent;
+    outline: 0;
+    border: 0;
+}

@@ -6,6 +6,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const [showPassword, setShwoPassword] = useState(false);
   let from = location.state?.from?.pathname || "/";
 
   const handleSubmit = async (e) => {
@@ -22,7 +23,12 @@ const Login = () => {
         navigate(from, { replace: true });
       }
     } catch (error) {
-      ErrorNotify(error.code);
+      if (error.code == "auth/invalid-credential") {
+        ErrorNotify("Invalid email or password");
+      } else {
+        ErrorNotify(error.code);
+      }
+
       setLoading(false);
     }
   };
@@ -54,13 +60,27 @@ const Login = () => {
         <div>
           <label htmlFor="">Password</label>
           <br />
-          <input
-            required
-            className="form-control"
-            type="password"
-            name="password"
-            placeholder="password"
-          />
+          <div className="password-box">
+            <input
+              required
+              className="form-control"
+              type={!showPassword ? "password" : "text"}
+              name="password"
+              placeholder="password"
+            />
+
+            <button
+              className="show-btn"
+              type="button"
+              onClick={() => setShwoPassword((prev) => !prev)}
+            >
+              {!showPassword ? (
+                <i className="fa-solid fa-eye"></i>
+              ) : (
+                <i class="fa-solid fa-eye-slash"></i>
+              )}
+            </button>
+          </div>
         </div>
         <br />
         <div>
