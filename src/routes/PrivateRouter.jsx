@@ -16,7 +16,7 @@ const PrivateRouter = ({ children }) => {
   };
 
   useEffect(() => {
-    const localAuth = localStorage?.getItem("koursely-auth");
+    const localAuth = localStorage?.getItem("tasksBaseAuth");
     if (localAuth) {
       const authData = JSON.parse(localAuth);
       const userData = extractUserData(authData);
@@ -26,7 +26,6 @@ const PrivateRouter = ({ children }) => {
     }
     setLoading(false);
   }, []);
-
 
   const location = useLocation();
   if (loading) {
