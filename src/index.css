@@ -47,6 +47,19 @@ body {
 th{
   background-color: #F2F2F2 !important;
 }
+.heading{
+  font-weight: bold;
+}
+
+.h-screen{
+  height: 100dvh;
+} 
+.w-full{
+  width: 100;
+}
+.text-bold{
+  font-weight: bold;
+}
 
 @media screen and (max-width: 992px) {
   .edit-form {

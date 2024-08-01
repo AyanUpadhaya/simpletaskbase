@@ -63,7 +63,8 @@ const Login = () => {
         gap: "16px",
       }}
     >
-      <h2>Login form</h2>
+      <h1 className="heading">SimpleTaskBase</h1>
+      <h2>Login</h2>
       <form className="w-50" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="">Email</label>

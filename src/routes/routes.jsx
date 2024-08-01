@@ -7,6 +7,7 @@ import Register from "../authentication/Register";
 import TaskDetail from "../pages/TaskDetail";
 import ForgotPassword from "../authentication/ForgotPassword";
 import ResetPassword from "../authentication/ResetPassword";
+import NotFound from "../pages/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -40,7 +41,7 @@ export const router = createBrowserRouter([
     element: <ForgotPassword></ForgotPassword>,
   },
   {
-    path: "/reset-password",
-    element: <ResetPassword></ResetPassword>,
+    path: "*",
+    element: <NotFound></NotFound>
   },
 ]);

@@ -49,6 +49,7 @@ const ForgotPassword = () => {
         gap: "16px",
       }}
     >
+     
       <h2>Forgot Password</h2>
       <form className="w-50" onSubmit={handleSubmit}>
         <div>

@@ -61,6 +61,7 @@ const Register = () => {
         gap: "16px",
       }}
     >
+      <h1 className="heading">SimpleTaskBase</h1>
       <h2>Register form</h2>
       <form className="w-50" onSubmit={handleSubmit}>
         <div>
