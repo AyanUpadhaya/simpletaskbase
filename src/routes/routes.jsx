@@ -6,6 +6,7 @@ import Login from "../authentication/Login";
 import Register from "../authentication/Register";
 import TaskDetail from "../pages/TaskDetail";
 import ForgotPassword from "../authentication/ForgotPassword";
+import ResetPassword from "../authentication/ResetPassword";
 
 export const router = createBrowserRouter([
   {
@@ -37,5 +38,9 @@ export const router = createBrowserRouter([
   {
     path: "/forgot-password",
     element: <ForgotPassword></ForgotPassword>,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword></ResetPassword>,
   },
 ]);

@@ -2,8 +2,18 @@ import React from "react";
 import { formatTimestamp } from "../../utils/formatTimeStamp";
 import { useNavigate } from "react-router-dom";
 
-const TasksTable = ({ allTasks, handleTaskCompleted, handleDelete, user }) => {
+const TasksTable = ({
+  allTasks,
+  handleTaskCompleted,
+  handleDelete,
+  user,
+  indexOfFirstRow,
+  indexOfLastRow,
+  currentPage,
+  rowsPerPage,
+}) => {
   const navigate = useNavigate();
+  const currentRows = allTasks?.slice(indexOfFirstRow, indexOfLastRow);
   const handleNavigate = (item) => {
     navigate(`/task-detail`, {
       state: {
@@ -28,18 +38,18 @@ const TasksTable = ({ allTasks, handleTaskCompleted, handleDelete, user }) => {
       <table className="table table-striped">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Task</th>
-            <th scope="col">Created</th>
-            <th scope="col">Priority</th>
-            <th scope="col text-center">Status</th>
-            <th scope="col" className="text-center">
+            <th scope="col head-cell">#</th>
+            <th scope="col head-cell">Task</th>
+            <th scope="col head-cell">Created</th>
+            <th scope="col head-cell">Priority</th>
+            <th scope="col head-cell text-center">Status</th>
+            <th scope="col head-cell" className="text-center">
               Actions
             </th>
           </tr>
         </thead>
         <tbody>
-          {allTasks?.length == 0 ? (
+          {currentRows?.length == 0 ? (
             <tr>
               <td colSpan={8}>
                 <h2 className="text-center">No data found</h2>
@@ -47,9 +57,14 @@ const TasksTable = ({ allTasks, handleTaskCompleted, handleDelete, user }) => {
             </tr>
           ) : (
             <>
-              {allTasks.map((task, index) => (
+              {currentRows.map((task, index) => (
                 <tr key={index}>
-                  <th scope="row">{index + 1}</th>
+                  {/* <th scope="row">{index + 1}</th> */}
+                  <th scope="row">
+                    {currentPage === 1 && index + 1 < 10
+                      ? "0" + (rowsPerPage * (currentPage - 1) + index + 1)
+                      : rowsPerPage * (currentPage - 1) + index + 1}
+                  </th>
                   <td>
                     {task?.title?.length > 30
                       ? task.title.slice(0, 31) + "..."

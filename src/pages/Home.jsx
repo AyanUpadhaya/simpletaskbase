@@ -10,6 +10,9 @@ import { ErrorNotify, InfoNotify } from "../utils/getNotify";
 import TasksTable from "../components/tables/TasksTable";
 import AddTaskModal from "../components/modals/AddTaskModal";
 
+import ResponsivePagination from "react-responsive-pagination";
+import "react-responsive-pagination/themes/classic.css";
+
 const Home = () => {
   const { user } = useSelector((state) => state.user);
   const [allTasks, setAllTasks] = useState([]);
@@ -17,6 +20,11 @@ const Home = () => {
   const [isAscending, setIsAscending] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [searchTerm, setsearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
 
   const extractInformations = (snapshots) => {
     const tasks = [];
@@ -81,19 +89,19 @@ const Home = () => {
       return data?.is_completed == false;
     }
     if (searchTerm == "all") {
-      return data
+      return data;
     }
     if (searchTerm == "high") {
-       return data?.priority == "1";
+      return data?.priority == "1";
     }
     if (searchTerm == "mid") {
-       return data?.priority == "2";
+      return data?.priority == "2";
     }
     if (searchTerm == "low") {
-       return data?.priority == "3";
+      return data?.priority == "3";
     }
     if (searchTerm == "") {
-      return data
+      return data;
     }
   };
 
@@ -102,6 +110,7 @@ const Home = () => {
       ?.sort(sortByTime)
       ?.filter((item) => filterBySearch(item, searchValue))
       ?.filter((item) => filterByOptions(item, searchTerm)) || [];
+  const totalPages = Math.ceil(newData.length / rowsPerPage);
 
   if (loading) {
     return (
@@ -206,14 +215,30 @@ const Home = () => {
           </div>
         )}
 
-        {allTasks.length !== 0 && (
-          <TasksTable
-            allTasks={newData}
-            handleDelete={handleDelete}
-            handleTaskCompleted={handleTaskCompleted}
-            user={user}
-          ></TasksTable>
-        )}
+        <div className="table-container">
+          <div className="table-section">
+            {allTasks.length !== 0 && (
+              <TasksTable
+                allTasks={newData}
+                handleDelete={handleDelete}
+                handleTaskCompleted={handleTaskCompleted}
+                user={user}
+                indexOfFirstRow={indexOfFirstRow}
+                indexOfLastRow={indexOfLastRow}
+                currentPage={currentPage}
+                rowsPerPage={rowsPerPage}
+              ></TasksTable>
+            )}
+          </div>
+          <div>
+            <ResponsivePagination
+              current={currentPage}
+              total={totalPages}
+              onPageChange={setCurrentPage}
+              
+            />
+          </div>
+        </div>
 
         <AddTaskModal user={user}></AddTaskModal>
       </div>

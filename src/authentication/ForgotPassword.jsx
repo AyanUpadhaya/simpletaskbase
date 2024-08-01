@@ -1,11 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ErrorNotify, InfoNotify } from "../utils/getNotify";
 import { handlePasswordResetEmail } from "../firebase/functions/functions.firebase";
+import { useSelector } from "react-redux";
 
 const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { auth: stateAuth } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (stateAuth?.email) {
+      navigate("/");
+    }
+  }, [stateAuth]);
+
   const location = useLocation();
   let from = "/login";
   const handleSubmit = async (e) => {
@@ -19,7 +28,13 @@ const ForgotPassword = () => {
       InfoNotify("Mail has been sent");
       navigate(from, { replace: true });
     } catch (error) {
-      ErrorNotify(error.code);
+      if (error.code === "auth/user-not-found") {
+         
+        ErrorNotify("User not found, try again!");   
+      }else{
+        ErrorNotify(error.code);  
+      }
+      
       setLoading(false);
     }
   };
